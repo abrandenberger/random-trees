@@ -115,11 +115,9 @@ function repositionButtons() {
 
 function drawTree(root, x, y, w) {
     if (root.children.length == 0) {
-        fill(255, 0, 0, 125);
+        fill(0, 255 / (root.multiplicity), 255 - 255 / (root.multiplicity));
         circle(x, y, 2 * radius);
-        if (root.multiplicity != null) {
-            text(root.multiplicity, x + 4, y + 2)
-        }
+        text(root.multiplicity, x + 4, y + 2)
     } else {
         let rArray = root.children.map(u => u.size / (u.height + 1));
         let rSum = rArray.reduce((a, b) => a + b);
@@ -129,11 +127,9 @@ function drawTree(root, x, y, w) {
             drawTree(root.children[k], x - w / 2 + acc + cur / 2, y + levelDiff, cur);
             return acc + cur;
         }, 0);
-        fill(0, 255 / (root.children.length), 255 - 255 / (root.children.length));
+        fill(0, 255 / (root.multiplicity), 255 - 255 / (root.multiplicity));
         circle(x, y, 2 * radius);
-        if (root.multiplicity != null) {
-            text(root.multiplicity, x + 4, y + 2)
-        }
+        text(root.multiplicity, x + 4, y + 2)
     }
 }
 
@@ -149,11 +145,9 @@ function drawTreeFromMap(root, positions, scalings) {
         y = map(p.y, scalings.minY, scalings.maxY, padding, height - padding);
     }
     if (root.children.length == 0) {
-        fill(255, 0, 0, 125);
+        fill(255 - 255 / (root.multiplicity), 0, 255 / (root.multiplicity));
         circle(x, y, 2 * radius);
-        if (root.multiplicity != null) {
-            text(root.multiplicity, x + 4, y + 2)
-        }
+        text(root.multiplicity, x + 4, y + 2)
     } else {
         root.children.forEach(c => {
             q = positions.get(c);
@@ -162,11 +156,9 @@ function drawTreeFromMap(root, positions, scalings) {
             line(x, y, x_, y_);
             drawTreeFromMap(c, positions, scalings);
         })
-        fill(0, 255 / (root.children.length), 255 - 255 / (root.children.length));
+        fill(255 - 255 / (root.multiplicity), 0, 255 / (root.multiplicity));
         circle(x, y, 2 * radius);
-        if (root.multiplicity != null) {
-            text(root.multiplicity, x + 4, y + 2)
-        }
+        text(root.multiplicity, x + 4, y + 2)
     }
 }
 
