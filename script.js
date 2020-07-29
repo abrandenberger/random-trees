@@ -88,8 +88,10 @@ function newTree() {
 function toggleFullScreen() {
     if (!isFullScreen) {
         resizeCanvas(window.innerWidth, window.innerHeight);
+        resizeButton.html('<i class = "fa fa-compress"> </i>');
     } else {
-        resizeCanvas(window.innerWidth * 3 / 4, window.innerHeight * 3 / 4)
+        resizeCanvas(window.innerWidth * 3 / 4, window.innerHeight * 3 / 4);
+        resizeButton.html('<i class = "fa fa-expand"> </i>');
     }
     isFullScreen = !isFullScreen;
     repositionButtons();
@@ -170,57 +172,58 @@ function setup() {
     // noLoop();
     initializeMap(t, width / 2, 10, width);
     resizeButton = createButton('Full Screen');
+    resizeButton.html('<i class = "fa fa-expand"> </i>');
     resizeButton.mouseClicked(toggleFullScreen);
 
     treeButton = createButton('New Tree');
-    treeButton.mouseClicked(newTree);
+        treeButton.mouseClicked(newTree);
 
-    repositionButtons();
-}
+        repositionButtons();
+    }
 
-function draw() {
-    background(240);
-    let scaleValue = min(width, height);
-    let scalings = {
-            minX: Infinity,
-            minY: Infinity,
-            maxX: -Infinity,
-            maxY: -Infinity
-        }
-        // update accelerations then velocities then positions
-    positions.forEach((p, nodep) => {
-        p.ax = 0;
-        p.ay = 0;
-        positions.forEach((q, nodeq) => {
-            if (p != q) {
-                let d = dist(p.x, p.y, q.x, q.y);
-                let sx = (q.x - p.x) / d; // unit vector
-                let sy = (q.y - p.y) / d;
-                // repelling force between all nodes 
-                p.ax += -g * sx / (d + 1) ** 2;
-                p.ay += -g * sy / (d + 1) ** 2;
-                if (t.areNeighbours(nodep, nodeq)) {
-                    // attractive force 
-                    // p.ax += g * sx / (d + 1) ** 2;
-                    // p.ay += g * sy / (d + 1) ** 2;
-                    // spring force 
-                    p.ax += k * sx * (d - 100);
-                    p.ay += k * sy * (d - 100);
-                }
+    function draw() {
+        background(240);
+        let scaleValue = min(width, height);
+        let scalings = {
+                minX: Infinity,
+                minY: Infinity,
+                maxX: -Infinity,
+                maxY: -Infinity
             }
+            // update accelerations then velocities then positions
+        positions.forEach((p, nodep) => {
+            p.ax = 0;
+            p.ay = 0;
+            positions.forEach((q, nodeq) => {
+                if (p != q) {
+                    let d = dist(p.x, p.y, q.x, q.y);
+                    let sx = (q.x - p.x) / d; // unit vector
+                    let sy = (q.y - p.y) / d;
+                    // repelling force between all nodes 
+                    p.ax += -g * sx / (d + 1) ** 2;
+                    p.ay += -g * sy / (d + 1) ** 2;
+                    if (t.areNeighbours(nodep, nodeq)) {
+                        // attractive force 
+                        // p.ax += g * sx / (d + 1) ** 2;
+                        // p.ay += g * sy / (d + 1) ** 2;
+                        // spring force 
+                        p.ax += k * sx * (d - 100);
+                        p.ay += k * sy * (d - 100);
+                    }
+                }
+            })
         })
-    })
 
-    positions.forEach((p, node) => {
-        p.vx += p.ax - gamma * p.vx;
-        p.vy += p.ay - gamma * p.vy;
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x <= scalings.minX) { scalings.minX = p.x; }
-        if (p.x >= scalings.maxX) { scalings.maxX = p.x; }
-        if (p.y <= scalings.minY) { scalings.minY = p.y; }
-        if (p.y >= scalings.maxY) { scalings.maxY = p.y; }
-    })
+        positions.forEach((p, node) => {
+            p.vx += p.ax - gamma * p.vx;
+            p.vy += p.ay - gamma * p.vy;
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x <= scalings.minX) { scalings.minX = p.x; }
+            if (p.x >= scalings.maxX) { scalings.maxX = p.x; }
+            if (p.y <= scalings.minY) { scalings.minY = p.y; }
+            if (p.y >= scalings.maxY) { scalings.maxY = p.y; }
+        })
 
-    drawTreeFromMap(t, positions, scalings);
-}
+        drawTreeFromMap(t, positions, scalings);
+    }
