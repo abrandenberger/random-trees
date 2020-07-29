@@ -5,8 +5,13 @@ let levelDiff;
 let g = 1000;
 let k = 0.1;
 let gamma = 0.04;
-let padding = 20;
+let padding = 30;
 let maxNodeCount = 150;
+
+let canvas;
+let isFullScreen = false;
+let resizeButton;
+let treeButton;
 
 let testert = new Tree(
     new Tree(
@@ -58,7 +63,7 @@ function initializeMap(root, x, y, w) {
 
 console.log('tester tree height', testert.height, 'size', testert.size, 'left subtree height', testert.children[0].height, 'size', testert.children[0].size)
 
-function mouseClicked() {
+function newTree() {
     t = Tree.randomTree('manual', [8, 12, 6, 1]);
     // t = Tree.randomTree('manual', [1, 0, 1]);
     h = t.height;
@@ -76,40 +81,36 @@ function mouseClicked() {
             console.log('left subtree height', t.left.height, 'size', t.left.size);
         }
     } else {
-        mouseClicked();
+        newTree();
     }
 }
 
-function drawBinaryTree(root, x, y, w, drawlabels = false, label = 1) { //input t
-    if (root.left == null && root.right == null) {
-        // draw single node 
-        fill(255, 0, 0, 125);
-        circle(x, y, 2 * radius);
-    } else if (root.right == null) { //left child only
-        fill(0, 0, 255, 125);
-        line(x, y, x, y + levelDiff);
-        circle(x, y, 2 * radius);
-        drawBinaryTree(root.left, x, y + levelDiff, w);
-    } else { //left and right children 
-        let r_l = root.left.size / (root.left.height + 1);
-        let r_r = root.right.size / (root.right.height + 1);
-        let w_l = Math.max(2 * radius, w * r_l / (r_r + r_l));
-        let w_r = Math.max(2 * radius, w * r_r / (r_r + r_l));
-        if (w_l <= 2 * radius && w_r <= w * radius) {
-            line(x, y, x - w_l / 2, y + levelDiff);
-            line(x, y, x + w_r / 2, y + levelDiff);
-            drawBinaryTree(root.left, x - w_l / 2, y + levelDiff, w_l);
-            drawBinaryTree(root.right, x + w_r / 2, y + levelDiff, w_r);
-        } else {
-            line(x, y, x - w / 2 + w_l / 2, y + levelDiff);
-            // line(x, y, x + w / 2 - w_r / 2, y + levelDiff);
-            line(x, y, x - w / 2 + w_l + w_r / 2, y + levelDiff);
-            drawBinaryTree(root.left, x - w / 2 + w_l / 2, y + levelDiff, w_l);
-            drawBinaryTree(root.right, x - w / 2 + w_l + w_r / 2, y + levelDiff, w_r);
-        }
-        fill(0, 255, 0, 125);
-        circle(x, y, 2 * radius);
+function toggleFullScreen() {
+    if (!isFullScreen) {
+        resizeCanvas(window.innerWidth, window.innerHeight);
+    } else {
+        resizeCanvas(window.innerWidth * 3 / 4, window.innerHeight * 3 / 4)
     }
+    isFullScreen = !isFullScreen;
+    repositionButtons();
+}
+
+function windowResized() { // p5: runs when window is resized
+    if (isFullScreen) {
+        resizeCanvas(window.innerWidth, window.innerHeight);
+    } else {
+        resizeCanvas(window.innerWidth * 3 / 4, window.innerHeight * 3 / 4)
+    }
+    repositionButtons();
+}
+
+function repositionButtons() {
+    let pos = canvas.position();
+    let buttonSize = resizeButton.size();
+    resizeButton.position(pos.x + width - buttonSize.width, pos.y + height - buttonSize.height);
+    print(buttonSize.width, buttonSize.height);
+
+    treeButton.position(pos.x, pos.y);
 }
 
 function drawTree(root, x, y, w) {
@@ -170,12 +171,19 @@ function drawTreeFromMap(root, positions, scalings) {
 }
 
 function setup() {
-    createCanvas(window.innerWidth, window.innerHeight);
+    canvas = createCanvas(window.innerWidth * 3 / 4, window.innerHeight * 3 / 4);
     stroke(0, 125);
     levelDiff = (height - 20) / h;
     textSize(8);
     // noLoop();
-    initializeMap(t, width / 2, 10, width)
+    initializeMap(t, width / 2, 10, width);
+    resizeButton = createButton('Full Screen');
+    resizeButton.mouseClicked(toggleFullScreen);
+
+    treeButton = createButton('New Tree');
+    treeButton.mouseClicked(newTree);
+
+    repositionButtons();
 }
 
 function draw() {
@@ -223,52 +231,4 @@ function draw() {
     })
 
     drawTreeFromMap(t, positions, scalings);
-
-    // drawTree(testert, width / 2, 10, width);
-
-    // let tree1 = new Tree(
-    //   new Tree(
-    //     new Tree()
-    //   ),
-    //   new Tree(
-    //     new Tree()
-    //   )
-    // );
-    // let equiv1 = tree1.getEquivClasses();
-    // print(equiv1.length);
-    // print(equiv1.map(l => l.length));
-
-    // print(testert.getEquivClasses().map(l => l.length));
-
-    // let tree2 = new Tree(
-    //   new Tree(
-    //     new Tree(), new Tree()
-    //   ),
-    //   new Tree()
-    // );
-    // print(tree2.getEquivClasses().map(l => l.length));
-
-    // let largetree = new Tree(
-    //   new Tree(),
-    //   new Tree(
-    //     new Tree(),
-    //     new Tree(
-    //       new Tree(),
-    //       new Tree(
-    //         new Tree(),
-    //         new Tree(
-    //           new Tree(),
-    //           new Tree()
-    //         )
-    //       ),
-    //       new Tree()
-    //     )
-    //   ),
-    //   new Tree()
-    // );
-    // print(largetree.getEquivClasses().map(l => l.length));
-    // print((new Tree()).getEquivClasses().map(l => l.length));
-
-    // print(testert.children[0].deepCopy());
-    // print(testert.children[0]);
 }
