@@ -58,11 +58,18 @@ class BinaryTree {
 class Tree {
   constructor(...children) {
     this.children = children;
-    this.computeProperties();
     this.parent = null;
     this.children.forEach(c => c.parent = this);
     this.multiplicity = null;
+    this.nodeDistances = new Map();
+    this.computeProperties();
+    this.getDepth(0);
+    // this.getNodeDistances();
   }
+
+  // getNodeDistances() {
+    
+  // }
 
   static randomTree(name, params) {
     // implement check if mean is <= 1
@@ -99,10 +106,14 @@ class Tree {
       this.size = 1;
     }
     else {
-      // this.children.forEach(child => child.computeHeight())
       this.height = 1 + Math.max(...this.children.map(p => p == null ? 0 : p.height));
       this.size = 1 + this.children.map(p => p.size).reduce((a, b) => a + b);
     }
+  }
+
+  getDepth(depth) {
+    this.depth = depth;
+    this.children.forEach(c => c.getDepth(depth + 1));
   }
 
   recomputeProperties() { // O(n) called once
@@ -140,6 +151,7 @@ class Tree {
       curOrigNode = curOrigNode.parent; // go up in the original tree
     }
     t.recomputeProperties();
+    t.getDepth(0);
     return t;
   }
 

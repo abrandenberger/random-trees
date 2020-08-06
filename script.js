@@ -61,7 +61,8 @@ function initializeMap(root, x, y, w) {
     }
 }
 
-// console.log('tester tree height', testert.height, 'size', testert.size, 'left subtree height', testert.children[0].height, 'size', testert.children[0].size)
+console.log('tester tree height', testert.height, 'size', testert.size, 'left subtree height', testert.children[0].height, 'size', testert.children[0].size)
+console.log('tester tree depth', testert.depth, 'child depth', testert.children[1].depth, 'grandchild', testert.children[1].children[0].depth);
 
 function newTree() {
     t = Tree.randomTree('manual', [8, 12, 6, 1]);
