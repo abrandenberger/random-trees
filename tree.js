@@ -64,12 +64,8 @@ class Tree {
     this.nodeDistances = new Map();
     this.computeProperties();
     this.getDepth(0);
-    // this.getNodeDistances();
+    this.getNodeDistances();
   }
-
-  // getNodeDistances() {
-    
-  // }
 
   static randomTree(name, params) {
     // implement check if mean is <= 1
@@ -126,6 +122,32 @@ class Tree {
       this.height = 1 + Math.max(...this.children.map(p => p == null ? 0 : p.height));
       this.size = 1 + this.children.map(p => p.size).reduce((a, b) => a + b);
     }
+  }
+
+  LCA(a, b) {
+    if (a == b) { 
+      return a; 
+    } 
+    else if (a.depth > b.depth) {
+      return this.LCA(a.parent, b);
+    } 
+    else if (b.depth > a.depth) {
+      return this.LCA(a, b.parent);
+    }
+    else {
+      return this.LCA(a.parent, b.parent);
+    }
+  }
+
+  getNodeDistances() {
+    let nodeList = this.getAllNodes();
+    nodeList.forEach(a => { // for each start node 
+      let aNodeDistances = new Map();  // each node gets mapped to a Map
+      nodeList.forEach(b => { // each node it could then connect to
+          aNodeDistances.set(b, a.depth + b.depth - 2*this.LCA(a, b).depth);
+      });  
+      this.nodeDistances.set(a, aNodeDistances); 
+    });
   }
 
   deepCopy() {
