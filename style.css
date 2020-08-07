@@ -7,6 +7,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Computer Modern Serif', serif;
+}
+
+h1 {
+    font-weight: bold;
 }
 
 canvas {
@@ -32,6 +37,10 @@ canvas {
 #description {
     width: 75vw;
     padding-top: 1em;
+}
+
+button {
+    font-family: 'Computer Modern Serif', serif;
 }
 
 .topleft {

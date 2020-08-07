@@ -64,7 +64,7 @@ class Tree {
     this.nodeDistances = new Map();
     this.computeProperties();
     this.getDepth(0);
-    this.getNodeDistances();
+    // this.getNodeDistances();
   }
 
   static randomTree(name, params) {

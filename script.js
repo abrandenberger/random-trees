@@ -66,13 +66,14 @@ console.log('tester tree height', testert.height, 'size', testert.size, 'left su
 console.log('tester tree depth', testert.depth, 'child depth', testert.children[1].depth, 'grandchild', testert.children[1].children[0].depth);
 console.log('LCA root', testert.LCA(testert.children[0], testert.children[1]) == testert, 'LCA right child', 
 testert.LCA(testert.children[1].children[0], testert.children[1].children[1]) == testert.children[1]);
-console.log('Distance root - child', testert.nodeDistances.get(testert).get(testert.children[0]));
-console.log('Distance child - grandchild', testert.nodeDistances.get(testert.children[0]).get(testert.children[1].children[0]));
+// console.log('Distance root - child', testert.nodeDistances.get(testert).get(testert.children[0]));
+// console.log('Distance child - grandchild', testert.nodeDistances.get(testert.children[0]).get(testert.children[1].children[0]));
 
 function newTree() {
     t = Tree.randomTree('manual', [8, 12, 6, 1]);
     // t = Tree.randomTree('manual', [1, 0, 1]);
     h = t.height;
+    console.log('height', t.height, 'size', t.size);
     if (t.size <= maxNodeCount) {
         t.setMultiplicities();
         // let u = testert.children[0];
@@ -82,7 +83,6 @@ function newTree() {
         positions = new Map();
         initializeMap(t, width / 2, 10, width);
         redraw();
-        console.log('height', t.height, 'size', t.size);
         if (t.left != null) {
             console.log('left subtree height', t.left.height, 'size', t.left.size);
         }
