@@ -36,8 +36,9 @@ canvas {
 }
 
 #description {
-    width: 75vw;
+    width: min(75vw, 900px);
     padding-top: 1em;
+    text-align: justify;
 }
 
 button {

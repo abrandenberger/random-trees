@@ -91,12 +91,16 @@ function newTree() {
     }
 }
 
+function windowSize() {
+    return [min(900, Math.floor(window.innerWidth * 3 / 4)), Math.floor(window.innerHeight * 3 / 4)]
+}
+
 function toggleFullScreen() {
     if (!isFullScreen) {
         resizeCanvas(window.innerWidth, window.innerHeight);
         resizeButton.html('<i class = "fa fa-compress"> </i>');
     } else {
-        resizeCanvas(Math.floor(window.innerWidth * 3 / 4), Math.floor(window.innerHeight * 3 / 4));
+        resizeCanvas(...windowSize());
         resizeButton.html('<i class = "fa fa-expand"> </i>');
     }
     isFullScreen = !isFullScreen;
@@ -107,7 +111,7 @@ function windowResized() { // p5: runs when window is resized
     if (isFullScreen) {
         resizeCanvas(window.innerWidth, window.innerHeight);
     } else {
-        resizeCanvas(Math.floor(window.innerWidth * 3 / 4), Math.floor(window.innerHeight * 3 / 4));
+        resizeCanvas(...windowSize());
     }
 }
 
@@ -168,7 +172,7 @@ function drawTreeFromMap(root, positions, scalings) {
 }
 
 function setup() {
-    canvas = createCanvas(Math.floor(window.innerWidth * 3 / 4), Math.floor(window.innerHeight * 3 / 4));
+    canvas = createCanvas(...windowSize());
     canvas.parent('canvas');
     stroke(0, 125);
     levelDiff = (height - 20) / h;
