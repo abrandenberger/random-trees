@@ -29,8 +29,28 @@ canvas {
     display: none;
 }
 
+#wrapper {
+    display: grid;
+    grid-template: "h" 1fr / 1fr;
+    justify-content: center;
+    align-content: center;
+}
+
+#spinnericon {
+    grid-area: h;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+}
+
+#spinnericon i {
+    font-size: 18pt; 
+}
+
 #canvas {
     position: relative;
+    grid-area: h;
     padding: 0;
     margin:0;
 }

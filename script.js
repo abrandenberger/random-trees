@@ -6,7 +6,8 @@ let g = 1000;
 let k = 0.1;
 let gamma = 0.04;
 let padding = 30;
-let maxNodeCount = 150;
+// let maxNodeCount = 150; // in  worker.js 
+let spinner;
 
 let canvas;
 let isFullScreen = false;
@@ -69,28 +70,6 @@ testert.LCA(testert.children[1].children[0], testert.children[1].children[1]) ==
 // console.log('Distance root - child', testert.nodeDistances.get(testert).get(testert.children[0]));
 // console.log('Distance child - grandchild', testert.nodeDistances.get(testert.children[0]).get(testert.children[1].children[0]));
 
-function newTree() {
-    t = Tree.randomTree('manual', [8, 12, 6, 1]);
-    // t = Tree.randomTree('manual', [1, 0, 1]);
-    h = t.height;
-    console.log('height', t.height, 'size', t.size);
-    if (t.size <= maxNodeCount) {
-        t.setMultiplicities();
-        // let u = testert.children[0];
-        // testert = testert.changeRoot(u);
-        // testert.setMultiplicities();
-        levelDiff = (height - 20) / h;
-        positions = new Map();
-        initializeMap(t, width / 2, 10, width);
-        redraw();
-        if (t.left != null) {
-            console.log('left subtree height', t.left.height, 'size', t.left.size);
-        }
-    } else {
-        newTree();
-    }
-}
-
 function windowSize() {
     return [min(900, Math.floor(window.innerWidth * 3 / 4)), Math.floor(window.innerHeight * 3 / 4)]
 }
@@ -114,13 +93,6 @@ function windowResized() { // p5: runs when window is resized
         resizeCanvas(...windowSize());
     }
 }
-
-// function repositionButtons() {
-//     let pos = canvas.position();
-//     let buttonSize = resizeButton.size();
-//     resizeButton.position(pos.x + width - buttonSize.width, pos.y + height - buttonSize.height);
-//     treeButton.position(pos.x, pos.y);
-// }
 
 function drawTree(root, x, y, w) {
     if (root.children.length == 0) {
@@ -171,6 +143,25 @@ function drawTreeFromMap(root, positions, scalings) {
     }
 }
 
+function newWorkerTree() {
+    spinner.style.visibility = 'visible';
+    noLoop();
+    background(240);
+    let worker = new Worker('worker.js'); 
+    worker.addEventListener('message', (message) => {
+        t = Tree.serialize(message.data.tree); 
+        h = t.height;
+        console.log('height', t.height, 'size', t.size);
+        levelDiff = (height - 20) / h;
+        positions = new Map();
+        initializeMap(t, width / 2, 10, width);
+        spinner.style.visibility = 'hidden';
+        // redraw();
+        loop();
+    }, false);
+    worker.postMessage({});
+}
+
 function setup() {
     canvas = createCanvas(...windowSize());
     canvas.parent('canvas');
@@ -186,7 +177,7 @@ function setup() {
     resizeButton.parent('canvas');
 
     treeButton = createButton('New Tree');
-    treeButton.mouseClicked(newTree);
+    treeButton.mouseClicked(newWorkerTree);
     
     treeButton.addClass('topleft');
     treeButton.parent('canvas');
@@ -246,4 +237,5 @@ window.onload = () => {
         .then(s => {
             document.getElementById('description').innerHTML = s;
         });
+    spinner = document.getElementById('spinnericon'); 
 }

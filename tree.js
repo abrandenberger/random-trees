@@ -61,7 +61,7 @@ class Tree {
     this.parent = null;
     this.children.forEach(c => c.parent = this);
     this.multiplicity = null;
-    this.nodeDistances = new Map();
+    // this.nodeDistances = new Map();
     this.computeProperties();
     this.getDepth(0);
     // this.getNodeDistances();
@@ -253,4 +253,16 @@ class Tree {
     return u.children.concat([u.parent]);
   }
 
+  static serialize(dumbTree) {
+    if (dumbTree.children.length != 0) {
+      let tree = new Tree(...dumbTree.children.map(c => Tree.serialize(c)));
+      tree.multiplicity = dumbTree.multiplicity;
+      return tree; 
+    }
+    else {
+      let tree = new Tree(); 
+      tree.multiplicity = dumbTree.multiplicity;
+      return tree;
+    }
+  }
 }
