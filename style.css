@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     margin: 0 !important;
     padding: 0 !important;
@@ -9,10 +10,41 @@ body {
     flex-direction: column;
     align-items: center;
     font-family: 'Computer Modern Serif', serif;
+    font-feature-settings: "onum" 1;
+}
+
+@supports (font-variant-numeric: oldstyle-nums) {
+    body {
+        font-feature-settings: normal;
+        font-variant-numeric: oldstyle-nums;
+    }
 }
 
 h1 {
     font-weight: bold;
+}
+
+.katex {
+    font-size: 1em !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.references {
+    text-align: left;
+}
+
+.references u {
+    font-family: 'Times New Roman';
+    font-variant: small-caps;
+    font-variant-numeric: oldstyle-nums;
+    text-decoration: none;
 }
 
 canvas {
@@ -45,14 +77,14 @@ canvas {
 }
 
 #spinnericon i {
-    font-size: 18pt; 
+    font-size: 18pt;
 }
 
 #canvas {
     position: relative;
     grid-area: h;
     padding: 0;
-    margin:0;
+    margin: 0;
 }
 
 #description {
@@ -73,8 +105,8 @@ button {
 }
 
 .bottomright {
-    position: absolute; 
-    right:0; 
-    bottom:0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
     /* z-index: 999999; */
 }

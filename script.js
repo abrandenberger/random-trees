@@ -219,10 +219,11 @@ function draw() {
 
 // window stuff
 window.onload = () => {
-    fetch('description.txt')
+    fetch('description.md')
         .then(res => res.text())
         .then(s => {
-            document.getElementById('description').innerHTML = s;
+            document.getElementById('description').innerHTML = marked(s);
+            renderMathInElement(document.body); // hack to get KaTex to work ew 
         });
     spinner = document.getElementById('spinnericon');
 }
