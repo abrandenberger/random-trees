@@ -12,6 +12,7 @@ function newTree() {
     // console.log('height', t.height, 'size', t.size);
     if (t.size <= maxNodeCount) {
         t.setMultiplicities();
+        // t.getNodeDistances(); // works
         return t; 
         // levelDiff = (height - 20) / h;
         // positions = new Map();

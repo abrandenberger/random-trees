@@ -4,7 +4,7 @@ class Tree {
     this.parent = null;
     this.children.forEach(c => c.parent = this);
     this.multiplicity = null;
-    // this.nodeDistances = new Map();
+    this.nodeDistances = new Map();
     this.computeProperties();
     this.getDepth(0);
     // this.getNodeDistances();
@@ -207,5 +207,11 @@ class Tree {
       tree.multiplicity = dumbTree.multiplicity;
       return tree;
     }
+  }
+
+  static serializeAndGetDistances(dumbTree) {
+    let tree = Tree.serialize(dumbTree); 
+    tree.getNodeDistances(); 
+    return tree; 
   }
 }

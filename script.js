@@ -1,5 +1,3 @@
-let t = Tree.randomTree('manual', [1, 0, 1]);
-// let h = t.height;
 let radius = 2;
 let levelDiff;
 let g = 1000;
@@ -33,14 +31,18 @@ let testert = new Tree(
         )
     ) // new Tree() is a single node 
 );
+let t = testert;
 let h = testert.height;
-testert.setMultiplicities();
-
-t = testert;
+t.setMultiplicities();
+t.getNodeDistances();
 
 let positions = new Map();
 
 function initializeMap(root, x, y, w) {
+    /*Initialize the positions for a given tree rooted at 'root', where the map
+    has tree nodes as keys, mapped to {x, y, vx, vy, ax, ay}. Here the tree is 
+    drawn as a regular Tree. 
+    */
     if (root.children.length == 0) {
         positions.set(root, { x, y, vx: 0, vy: 0, ax: 0, ay: 0 });
     } else {
@@ -65,12 +67,13 @@ function initializeMap(root, x, y, w) {
 // testing depth, LCA, and nodeDistances 
 console.log('tester tree height', testert.height, 'size', testert.size, 'left subtree height', testert.children[0].height, 'size', testert.children[0].size)
 console.log('tester tree depth', testert.depth, 'child depth', testert.children[1].depth, 'grandchild', testert.children[1].children[0].depth);
-console.log('LCA root', testert.LCA(testert.children[0], testert.children[1]) == testert, 'LCA right child', 
-testert.LCA(testert.children[1].children[0], testert.children[1].children[1]) == testert.children[1]);
+console.log('LCA root', testert.LCA(testert.children[0], testert.children[1]) == testert, 'LCA right child',
+    testert.LCA(testert.children[1].children[0], testert.children[1].children[1]) == testert.children[1]);
 // console.log('Distance root - child', testert.nodeDistances.get(testert).get(testert.children[0]));
 // console.log('Distance child - grandchild', testert.nodeDistances.get(testert.children[0]).get(testert.children[1].children[0]));
 
 function windowSize() {
+    /* Get the default non-full-screen canvas size. */
     return [min(900, Math.floor(window.innerWidth * 3 / 4)), Math.floor(window.innerHeight * 3 / 4)]
 }
 
@@ -94,27 +97,8 @@ function windowResized() { // p5: runs when window is resized
     }
 }
 
-function drawTree(root, x, y, w) {
-    if (root.children.length == 0) {
-        fill(0, 255 / (root.multiplicity), 255 - 255 / (root.multiplicity));
-        circle(x, y, 2 * radius);
-        text(root.multiplicity, x + 4, y + 2)
-    } else {
-        let rArray = root.children.map(u => u.size / (u.height + 1));
-        let rSum = rArray.reduce((a, b) => a + b);
-        let wArray = rArray.map(r => w * r / rSum);
-        wArray.reduce((acc, cur, k) => {
-            line(x, y, x - w / 2 + acc + cur / 2, y + levelDiff, cur)
-            drawTree(root.children[k], x - w / 2 + acc + cur / 2, y + levelDiff, cur);
-            return acc + cur;
-        }, 0);
-        fill(0, 255 / (root.multiplicity), 255 - 255 / (root.multiplicity));
-        circle(x, y, 2 * radius);
-        text(root.multiplicity, x + 4, y + 2)
-    }
-}
-
 function drawTreeFromMap(root, positions, scalings) {
+    /* Draw the tree given the current position map of the tree. */
     let p = positions.get(root);
     let x;
     let y;
@@ -144,13 +128,14 @@ function drawTreeFromMap(root, positions, scalings) {
 }
 
 function newWorkerTree() {
+    /* Create a new web worker that uses 'worker.js' and have it call  */
     spinner.style.visibility = 'visible';
     noLoop();
     clear();
     background(200);
-    let worker = new Worker('worker.js'); 
+    let worker = new Worker('worker.js');
     worker.addEventListener('message', (message) => {
-        t = Tree.serialize(message.data.tree); 
+        t = Tree.serializeAndGetDistances(message.data.tree);
         h = t.height;
         console.log('height', t.height, 'size', t.size);
         levelDiff = (height - 20) / h;
@@ -174,12 +159,12 @@ function setup() {
     resizeButton = createButton('Full Screen');
     resizeButton.html('<i class = "fa fa-expand"> </i>');
     resizeButton.mouseClicked(toggleFullScreen);
-    resizeButton.addClass('bottomright'); 
+    resizeButton.addClass('bottomright');
     resizeButton.parent('canvas');
 
     treeButton = createButton('New Tree');
     treeButton.mouseClicked(newWorkerTree);
-    
+
     treeButton.addClass('topleft');
     treeButton.parent('canvas');
 }
@@ -188,12 +173,13 @@ function draw() {
     background(240);
     let scaleValue = min(width, height);
     let scalings = {
-            minX: Infinity,
-            minY: Infinity,
-            maxX: -Infinity,
-            maxY: -Infinity
-        }
-        // update accelerations then velocities then positions
+        minX: Infinity,
+        minY: Infinity,
+        maxX: -Infinity,
+        maxY: -Infinity
+    }
+
+    // update accelerations then velocities then positions
     positions.forEach((p, nodep) => {
         p.ax = 0;
         p.ay = 0;
@@ -238,5 +224,5 @@ window.onload = () => {
         .then(s => {
             document.getElementById('description').innerHTML = s;
         });
-    spinner = document.getElementById('spinnericon'); 
+    spinner = document.getElementById('spinnericon');
 }
