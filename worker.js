@@ -1,5 +1,5 @@
 importScripts('tree.js');
-let maxNodeCount = 150;
+let maxNodeCount = 200;
 
 self.addEventListener('message', message => {
     self.postMessage({tree: newTree()}); 

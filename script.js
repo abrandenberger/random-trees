@@ -146,7 +146,8 @@ function drawTreeFromMap(root, positions, scalings) {
 function newWorkerTree() {
     spinner.style.visibility = 'visible';
     noLoop();
-    background(240);
+    clear();
+    background(200);
     let worker = new Worker('worker.js'); 
     worker.addEventListener('message', (message) => {
         t = Tree.serialize(message.data.tree); 
