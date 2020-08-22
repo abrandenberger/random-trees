@@ -40,11 +40,29 @@ a:hover {
     text-align: left;
 }
 
-.references u {
+u {
     font-family: 'Times New Roman';
     font-variant: small-caps;
     font-variant-numeric: oldstyle-nums;
+    font-weight: 100;
     text-decoration: none;
+    letter-spacing: .04em;
+}
+
+ol {
+    list-style: lower-roman;
+}
+
+blockquote {
+    padding-left: 1.5vw;
+    padding-right: 1.5vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    background-color: rgb(230, 242, 250);
+}
+blockquote p {
+    margin-block-start: .25em;
+    margin-block-end: .25em;
 }
 
 canvas {

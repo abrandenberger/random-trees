@@ -223,7 +223,14 @@ window.onload = () => {
         .then(res => res.text())
         .then(s => {
             document.getElementById('description').innerHTML = marked(s);
-            renderMathInElement(document.body); // hack to get KaTex to work ew 
+            renderMathInElement(document.body, options = {
+                delimeters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true }
+                ]
+            });
         });
     spinner = document.getElementById('spinnericon');
 }
