@@ -34,7 +34,8 @@ The notion of multiplicity can then be formalized as follows, but it is very int
 
 <span class='cool'>**Definition** (Multiplicity)**.**</span> We define the multiplicity \\(M(v)\\) of a node \\(v\\) to be the number of nodes that are isomorphic to \\(v\\), that is, nodes to which \\(v\\) can possibly be sent by an automorphism. Note that  \\(M(v) \geq 1\\) because a node can always be sent to itself.
 
-<br>
+<!-- <br> -->
+<p style='text-align: right;'> <span>&#8669;</span> made by <a href='https://abrandenberger.github.io'>myself</a> and a <a href='https://diegolopez.me/'>code cop</a> </p>
 
 ### References 
 
@@ -52,6 +53,5 @@ The notion of multiplicity can then be formalized as follows, but it is very int
 <u> Meir, A. and Moon, J. W. (1978). </u> **On the altitude of nodes in random trees**. _Canadian Journal of Mathematics_, **30**(5):997–1015. <a name='meirmoon'></a>
 
 <u>Reddad, T. (2019).</u>  **Some Conditioned Galton-Watson Trees Never Grow**. [Blog post](https://reddad.ca/2019/06/26/conditioned-gw-trees/). <a name='reddad'></a>
-
 
 </span>
