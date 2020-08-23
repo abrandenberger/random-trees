@@ -145,3 +145,11 @@ button {
     bottom: 0;
     /* z-index: 999999; */
 }
+
+#footer {
+    text-align: center;
+    margin-top: 4em;
+    margin-bottom: 4.5em;
+    font-size: small;
+    color: rgb(160, 160, 160);
+}
