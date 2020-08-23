@@ -5,6 +5,12 @@ body {
     padding: 0 !important;
 }
 
+:root {
+    --accent: rgb(51, 149, 215); 
+    --backgcolor: rgb(230, 242, 250);
+    --midcolor: rgb(187, 220, 242); 
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -22,6 +28,7 @@ body {
 
 h1 {
     font-weight: bold;
+    font-variant: small-caps;
 }
 
 .katex {
@@ -30,10 +37,12 @@ h1 {
 
 a {
     text-decoration: none;
+    color: var(--accent);
 }
 
 a:hover {
     text-decoration: underline;
+    text-decoration-thickness: thin;
 }
 
 .references {
@@ -49,6 +58,10 @@ u {
     letter-spacing: .04em;
 }
 
+.cool {
+    box-shadow: inset .4em 0px 0 white, inset 0 -.7em 0 var(--midcolor), .7em .3em 0 -.3em var(--midcolor);
+}
+
 ol {
     list-style: lower-roman;
 }
@@ -58,7 +71,7 @@ blockquote {
     padding-right: 1.5vw;
     padding-top: 1vh;
     padding-bottom: 1vh;
-    background-color: rgb(230, 242, 250);
+    background-color: var(--backgcolor);
 }
 blockquote p {
     margin-block-start: .25em;
@@ -106,7 +119,8 @@ canvas {
 }
 
 #description {
-    width: min(75vw, 900px);
+    width: 900px; 
+    max-width: 75vw;
     padding-top: 1em;
     text-align: justify;
 }
