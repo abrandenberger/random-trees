@@ -74,7 +74,7 @@ console.log('LCA root', testert.LCA(testert.children[0], testert.children[1]) ==
 
 function windowSize() {
     /* Get the default non-full-screen canvas size. */
-    return [min(900, Math.floor(window.innerWidth * 3 / 4)), Math.floor(window.innerHeight * 3 / 4)]
+    return [min(800, Math.floor(window.innerWidth * 3 / 4)), Math.floor(window.innerHeight * 3 / 4)]
 }
 
 function toggleFullScreen() {
