@@ -146,6 +146,12 @@ button {
     /* z-index: 999999; */
 }
 
+.topright {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
 #footer {
     text-align: center;
     margin-top: 4em;

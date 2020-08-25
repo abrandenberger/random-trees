@@ -1,16 +1,26 @@
 let radius = 2;
 let levelDiff;
 let g = 1000;
-let k = 0.1;
+let k = 0.05;
 let gamma = 0.04;
 let padding = 30;
 // let maxNodeCount = 150; // in  worker.js 
 let spinner;
+let clickRadius = 5;
+
+let scalings = {
+    minX: Infinity,
+    minY: Infinity,
+    maxX: -Infinity,
+    maxY: -Infinity
+}
 
 let canvas;
 let isFullScreen = false;
 let resizeButton;
 let treeButton;
+
+let clickedNode = null;
 
 let testert = new Tree(
     new Tree(
@@ -127,7 +137,7 @@ function drawTreeFromMap(root, positions, scalings) {
     }
 }
 
-function newWorkerTree() {
+function newWorkerTree(type) {
     /* Create a new web worker that uses 'worker.js' and have it call  */
     spinner.style.visibility = 'visible';
     noLoop();
@@ -145,7 +155,7 @@ function newWorkerTree() {
         // redraw();
         loop();
     }, false);
-    worker.postMessage({});
+    worker.postMessage({ type });
 }
 
 function setup() {
@@ -163,16 +173,45 @@ function setup() {
     resizeButton.parent('canvas');
 
     treeButton = createButton('New Tree');
-    treeButton.mouseClicked(newWorkerTree);
-
+    treeButton.mouseClicked(() => newWorkerTree('regular'));
     treeButton.addClass('topleft');
     treeButton.parent('canvas');
+
+    bigButton = createButton('Big Tree');
+    bigButton.mouseClicked(() => newWorkerTree('bigtree'));
+    bigButton.addClass('topright');
+    bigButton.parent('canvas');
+}
+
+function physToCanvas(scalings, x, y) {
+    return [map(x, scalings.minX, scalings.maxX, padding, width - padding), map(y, scalings.minY, scalings.maxY, padding, height - padding)];
+}
+
+function canvasToPhys(scalings, x, y) {
+    return [map(x, padding, width - padding, scalings.minX, scalings.maxX), map(y, padding, height - padding, scalings.minY, scalings.maxY)];
+}
+
+function mousePressed() {
+    let nodeList = t.getAllNodes();
+    clickedNode = null;
+    nodeList.forEach(n => {
+        let [nodeX, nodeY] = physToCanvas(scalings, positions.get(n).x, positions.get(n).y);
+        if (dist(nodeX, nodeY, mouseX, mouseY) < clickRadius) {
+            clickedNode = n;
+            cursor('grab');
+        }
+    });
+}
+
+function mouseReleased() {
+    clickedNode = null;
+    cursor(ARROW);
 }
 
 function draw() {
     background(240);
-    let scaleValue = min(width, height);
-    let scalings = {
+
+    scalings = {
         minX: Infinity,
         minY: Infinity,
         maxX: -Infinity,
@@ -186,18 +225,22 @@ function draw() {
         positions.forEach((q, nodeq) => {
             if (p != q) {
                 let d = dist(p.x, p.y, q.x, q.y);
+                let graphdist = t.nodeDistances.get(nodep).get(nodeq);
                 let sx = (q.x - p.x) / d; // unit vector
                 let sy = (q.y - p.y) / d;
-                // repelling force between all nodes 
-                p.ax += -g * sx / (d + 1) ** 2;
-                p.ay += -g * sy / (d + 1) ** 2;
-                if (t.areNeighbours(nodep, nodeq)) {
+                // if (t.areNeighbours(nodep, nodeq)) {
+                if (graphdist <= 2) {
                     // attractive force 
                     // p.ax += g * sx / (d + 1) ** 2;
                     // p.ay += g * sy / (d + 1) ** 2;
                     // spring force 
-                    p.ax += k * sx * (d - 100);
-                    p.ay += k * sy * (d - 100);
+                    p.ax += k * sx * (d - 100 * graphdist);
+                    p.ay += k * sy * (d - 100 * graphdist);
+                }
+                if (!t.areNeighbours(nodep, nodeq)) {
+                    // repelling force between all nodes 
+                    p.ax += -g * (sqrt(graphdist)) * sx / (d + 1) ** 2;
+                    p.ay += -g * (sqrt(graphdist)) * sy / (d + 1) ** 2;
                 }
             }
         })
@@ -213,6 +256,11 @@ function draw() {
         if (p.y <= scalings.minY) { scalings.minY = p.y; }
         if (p.y >= scalings.maxY) { scalings.maxY = p.y; }
     })
+
+    if (clickedNode != null) {
+        let [x, y] = canvasToPhys(scalings, mouseX, mouseY);
+        positions.set(clickedNode, {x, y, vx: 0, vy: 0, ax: 0, ay: 0});
+    }
 
     drawTreeFromMap(t, positions, scalings);
 }
