@@ -20,7 +20,7 @@ When Galton-Watson trees are conditioned on size \\(|T| = n\\), where \\(|T|\\) 
 3. Motzkin trees (where every node has \\(\leq 2\\) children whose order is significant) correspond to the distribution \\(p_0 = p_1 = p_2 = 1/3\\),
 4. Planted plane trees correspond to \\(\xi = \mathrm{Geometric}(1/2)\\).
 
-This project illustrates several definitions introduced in the paper [*Root Estimation in Galton-Watson Trees*](#brandenberger) by [Anna Brandenberger](https://abrandenberger.github.io), [Marcel Goh](https://marcelgoh.github.io/) and [Luc Devroye](http://luc.devroye.org/), which determines the maximum-likelihood estimator for the root of a free tree when the underlying tree is a conditional Galton-Watson tree. 
+This project illustrates several definitions introduced in the paper [*Root Estimation in Galton-Watson Trees*](#brandenberger) by [Anna Brandenberger](https://abrandenberger.github.io), [Luc Devroye](http://luc.devroye.org/) and [Marcel Goh](https://marcelgoh.github.io/), which determines the maximum-likelihood estimator for the root of a free tree when the underlying tree is a conditional Galton-Watson tree. 
 
 A _free tree_ is simply a connected acyclic graph. A normal rooted tree, in which all the edges have a parent-child direction, can be converted to a free tree by forgetting all these directions. 
 
@@ -43,7 +43,7 @@ The notion of multiplicity can then be formalized as follows, but it is very int
 
 <u> Bienaymé, I.-J. (1845).</u> **De la loi de multiplication et de la durée des familles**. _Société Philomathique de Paris Extraits_, **5**:37–39. <a name='bienayme'></a>
 
-<u> Brandenberger, A., Goh, M. K. and Devroye, L. (2020).</u> **Root Estimation in Galton-Watson Trees**. arXiv preprint
+<u> Brandenberger, A., Devroye, L. and Goh, M. K. (2020).</u> **Root Estimation in Galton-Watson Trees**. arXiv preprint
 [arXiv:2007.05681](https://arxiv.org/abs/2007.05681). <a name='brandenberger'></a>
 
 <u> Galton, F. and Watson, H. W. (1875).</u>  **On the probability of the extinction of families**. _Journal of the Royal Anthropological Institute_, **4**:138–144. <a name='galtonwatson'></a>
