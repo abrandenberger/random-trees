@@ -6,7 +6,7 @@ let gamma = 0.04;
 let padding = 30;
 // let maxNodeCount = 150; // in  worker.js 
 let spinner;
-let clickRadius = 5;
+let clickRadius = 10;
 
 let scalings = {
     minX: Infinity,
@@ -208,6 +208,17 @@ function mouseReleased() {
     cursor(ARROW);
 }
 
+function mousedOver(scalings, positions, mouseX, mouseY) {
+    let ret = null;
+    positions.forEach((p, node) => {
+        let [nodeX, nodeY] = physToCanvas(scalings, p.x, p.y);
+        if (dist(nodeX, nodeY, mouseX, mouseY) < clickRadius) {
+            ret = node;
+        }
+    });
+    return ret; 
+}
+
 function draw() {
     background(240);
 
@@ -244,7 +255,7 @@ function draw() {
                 }
             }
         })
-    })
+    });
 
     positions.forEach((p, node) => {
         p.vx += p.ax - gamma * p.vx;
@@ -255,11 +266,17 @@ function draw() {
         if (p.x >= scalings.maxX) { scalings.maxX = p.x; }
         if (p.y <= scalings.minY) { scalings.minY = p.y; }
         if (p.y >= scalings.maxY) { scalings.maxY = p.y; }
-    })
+    });
+
+    if (mousedOver(scalings, positions, mouseX, mouseY) != null) {
+        cursor('grab');
+    } else {
+        cursor(ARROW);
+    }
 
     if (clickedNode != null) {
         let [x, y] = canvasToPhys(scalings, mouseX, mouseY);
-        positions.set(clickedNode, {x, y, vx: 0, vy: 0, ax: 0, ay: 0});
+        positions.set(clickedNode, { x, y, vx: 0, vy: 0, ax: 0, ay: 0 });
     }
 
     drawTreeFromMap(t, positions, scalings);
