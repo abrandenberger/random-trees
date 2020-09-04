@@ -19,6 +19,8 @@ let canvas;
 let isFullScreen = false;
 let resizeButton;
 let treeButton;
+let mode = 'physics'; // type Mode = physics | drawing :( 
+let drawModeStartNode = null; // type DrawMode = Maybe Node :)
 
 let clickedNode = null;
 
@@ -46,6 +48,8 @@ let h = testert.height;
 t.setMultiplicities();
 t.getNodeDistances();
 
+let initialValues = {vx: 0, vy: 0, ax: 0, ay: 0};
+
 let positions = new Map();
 
 function initializeMap(root, x, y, w) {
@@ -66,10 +70,7 @@ function initializeMap(root, x, y, w) {
         positions.set(root, {
             x,
             y,
-            vx: 0,
-            vy: 0,
-            ax: 0,
-            ay: 0,
+            ...initialValues
         });
     }
 }
@@ -173,15 +174,49 @@ function setup() {
     resizeButton.parent('canvas');
 
     treeButton = createButton('New Tree');
-    treeButton.mouseClicked(() => newWorkerTree('regular'));
+    treeButton.mouseClicked(() => {
+        newWorkerTree('regular')
+        mode = 'physics';
+    });
     treeButton.addClass('topleft');
     treeButton.parent('canvas');
 
     bigButton = createButton('Big Tree');
-    bigButton.mouseClicked(() => newWorkerTree('bigtree'));
+    bigButton.mouseClicked(() => {
+        newWorkerTree('bigtree')
+        mode = 'physics';
+    });
     bigButton.addClass('topright');
     bigButton.parent('canvas');
+
+    customButton = createButton('Draw Tree');
+    customButton.mouseClicked(() => {
+        if (mode == 'drawing') {
+            mode = 'physics';
+            customButton.html('Draw Tree');
+            treeButton.removeClass('hidden');
+            bigButton.removeClass('hidden');
+        } else if (mode == 'physics') {
+            mode = 'drawing';
+            t = new Tree();
+            positions = new Map();
+            positions.set(t, {
+                x: width / 2,
+                y: height / 8,
+                ...initialValues
+            });
+            h = testert.height;
+            t.setMultiplicities();
+            t.getNodeDistances();
+            customButton.html('Done');
+            treeButton.addClass('hidden');
+            bigButton.addClass('hidden');
+        }
+    });
+    customButton.addClass('bottomleft');
+    customButton.parent('canvas');
 }
+
 
 function physToCanvas(scalings, x, y) {
     return [map(x, scalings.minX, scalings.maxX, padding, width - padding), map(y, scalings.minY, scalings.maxY, padding, height - padding)];
@@ -222,6 +257,64 @@ function mousedOver(scalings, positions, mouseX, mouseY) {
 function draw() {
     background(240);
 
+    if (mode == 'physics') {
+        update();
+        if (mousedOver(scalings, positions, mouseX, mouseY) != null) {
+            cursor('grab');
+        } else {
+            cursor(ARROW);
+        }
+    }
+
+    if (mode == 'drawing') {
+        scalings = {
+            minX: padding,
+            minY: padding,
+            maxX: width - padding,
+            maxY: height - padding
+        }
+        
+        if (drawModeStartNode != null) {
+            noCursor();
+            fill('black');
+            circle(mouseX, mouseY, 2 * radius);
+        } else {
+            if (mousedOver(scalings, positions, mouseX, mouseY) != null) {
+                cursor(CROSS);
+            } else {
+                cursor(ARROW);
+            }
+        }
+    }
+
+    drawTreeFromMap(t, positions, scalings);
+}
+
+function mouseClicked() {
+    if (mode == 'drawing') {
+        if (drawModeStartNode == null) {
+            drawModeStartNode = mousedOver(scalings, positions, mouseX, mouseY);
+        } else {
+            let newNode = new Tree();
+            newNode.parent = drawModeStartNode;
+            drawModeStartNode.children.push(newNode);
+            let [x, y] = canvasToPhys(scalings, mouseX, mouseY);
+            positions.set(newNode, {
+                x,
+                y,
+                ...initialValues
+            });
+            t.recomputeProperties();
+            t.getDepth(0);
+            t.setMultiplicities();
+            h = testert.height;
+            t.getNodeDistances();
+            drawModeStartNode = null;
+        }
+    }
+}
+
+function update() {
     scalings = {
         minX: Infinity,
         minY: Infinity,
@@ -268,18 +361,13 @@ function draw() {
         if (p.y >= scalings.maxY) { scalings.maxY = p.y; }
     });
 
-    if (mousedOver(scalings, positions, mouseX, mouseY) != null) {
-        cursor('grab');
-    } else {
-        cursor(ARROW);
-    }
+    //cursor
 
     if (clickedNode != null) {
         let [x, y] = canvasToPhys(scalings, mouseX, mouseY);
         positions.set(clickedNode, { x, y, vx: 0, vy: 0, ax: 0, ay: 0 });
     }
 
-    drawTreeFromMap(t, positions, scalings);
 }
 
 // window stuff

@@ -95,6 +95,10 @@ canvas {
     display: none;
 }
 
+.hidden {
+    display: none;
+}
+
 #wrapper {
     display: grid;
     grid-template: "h" 1fr / 1fr;
@@ -150,6 +154,12 @@ button {
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.bottomleft {
+    position: absolute;
+    left: 0;
+    bottom: 0;
 }
 
 #footer {
