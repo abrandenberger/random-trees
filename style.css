@@ -99,6 +99,10 @@ canvas {
     display: none;
 }
 
+.fullscreen #footer {
+    display: none;
+}
+
 .hidden {
     display: none;
 }
