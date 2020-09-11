@@ -34,7 +34,7 @@ The notion of multiplicity can then be formalized as follows, but it is very int
 
 <span class='cool'>**Definition** (Multiplicity)**.**</span> We define the multiplicity \\(M(v)\\) of a node \\(v\\) to be the number of nodes that are isomorphic to \\(v\\), that is, nodes to which \\(v\\) can possibly be sent by an automorphism. Note that  \\(M(v) \geq 1\\) because a node can always be sent to itself.
 
-<!-- <br> -->
+<br>
 
 ### References 
 

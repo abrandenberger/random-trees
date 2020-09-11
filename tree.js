@@ -31,10 +31,21 @@ class Tree {
     else if (name == 'geometric') { // geometric(p = 1/2)
       numChildren = Math.floor(Math.log(Math.random()) / Math.log(.5));
     }
-    
-    else if (name == 'poisson') {
 
+    else if (name == 'poisson') { // poisson(1) ~ (1/e)1/k!, lambda=-1 
+      // inverse transform sampling algorithm
+      let x = 0;
+      let p = 1/Math.E; 
+      let s = p; 
+      let u = Math.random();
+      while (u > s) {
+        x = x + 1; 
+        p = p / x; 
+        s = s + p;
+      }
+      numChildren = x;
     }
+
     let children = new Array(numChildren).fill(0).map(_ => Tree.randomTree(name, params));
     t = new Tree(...children);
     children.forEach(c => c.parent = t);
