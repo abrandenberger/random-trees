@@ -6,9 +6,9 @@ body {
 }
 
 :root {
-    --accent: rgb(51, 149, 215); 
+    --accent: rgb(51, 149, 215);
     --backgcolor: rgb(230, 242, 250);
-    --midcolor: rgb(187, 220, 242); 
+    --midcolor: rgb(187, 220, 242);
 }
 
 body {
@@ -31,7 +31,9 @@ h1 {
     font-variant: small-caps;
     box-shadow: inset 0 -.1em 0 white, inset 0 -.7em 0 var(--midcolor);
     padding-left: .3em;
-    padding-right: .3em; /* to make the shadow larger */
+    padding-right: .3em;
+    /* to make the shadow larger */
+    margin-bottom: .5em;
 }
 
 .katex {
@@ -62,7 +64,8 @@ u {
 }
 
 .cool {
-    box-shadow: inset .4em 0px 0 white, inset 0 -.7em 0 var(--midcolor), .7em .3em 0 -.3em var(--midcolor);
+    /* box-shadow: inset .4em 0px 0 white, inset 0 -.7em 0 var(--midcolor), .7em .3em 0 -.3em var(--midcolor); */
+    box-shadow: inset .4em 0px 0 white, inset 0 -.7em 0 var(--midcolor);
 }
 
 ol {
@@ -76,6 +79,7 @@ blockquote {
     padding-bottom: 1vh;
     background-color: var(--backgcolor);
 }
+
 blockquote p {
     margin-block-start: .25em;
     margin-block-end: .25em;
@@ -125,9 +129,12 @@ canvas {
     margin: 0;
 }
 
-#description {
-    width: 800px; 
+.sized {
+    width: 800px;
     max-width: 75vw;
+}
+
+#description {
     padding-top: 1em;
     text-align: justify;
 }
@@ -168,4 +175,29 @@ button {
     margin-bottom: 4.5em;
     font-size: small;
     color: rgb(160, 160, 160);
+    display: grid;
+    /* grid-template-columns: auto auto auto; */
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.footerleft {
+    text-align: left;
+    transition: .5s;
+}
+
+.footerleft:hover {
+    transform: translate(10px);
+}
+
+.footercenter {
+    text-align: center;
+}
+
+.footerright {
+    text-align: right;
+    transition: .5s;
+}
+
+.footerright:hover {
+    transform: translate(-10px);
 }
