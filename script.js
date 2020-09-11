@@ -45,8 +45,7 @@ let testert = new Tree(
 );
 let t = testert;
 let h = testert.height;
-t.setMultiplicities();
-t.getNodeDistances();
+t.setMultiplicitiesDistances();
 
 let initialValues = {vx: 0, vy: 0, ax: 0, ay: 0};
 
@@ -206,8 +205,7 @@ function setup() {
                 ...initialValues
             });
             h = testert.height;
-            t.setMultiplicities();
-            t.getNodeDistances();
+            t.setMultiplicitiesDistances();
             customButton.html('Done');
             treeButton.addClass('hidden');
             bigButton.addClass('hidden');
@@ -304,11 +302,9 @@ function mouseClicked() {
                 y,
                 ...initialValues
             });
-            t.recomputeProperties();
-            t.getDepth(0);
-            t.setMultiplicities();
+            t.recomputeAllProperties();
+            t.setMultiplicitiesDistances();
             h = testert.height;
-            t.getNodeDistances();
             drawModeStartNode = null;
         }
     }

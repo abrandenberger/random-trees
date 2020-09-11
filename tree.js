@@ -13,6 +13,7 @@ class Tree {
   static randomTree(name, params) {
     // implement check if mean is <= 1
     let t;
+    let numChildren; 
     if (name == 'manual') {
       let sum = params.reduce((a, b) => a + b);
       // console.log(sum);
@@ -24,18 +25,19 @@ class Tree {
       }
       let cdf = params.reduce((arr, cur) => arr.concat([arr[arr.length - 1] + cur]), [0]).slice(1); //get rid of zero
       let dice = Math.random();
-      let numChildren = cdf.findIndex(p => p > dice);
-      let children = new Array(numChildren).fill(0).map(_ => Tree.randomTree(name, params));
-      t = new Tree(...children);
-      children.forEach(c => c.parent = t);
+      numChildren = cdf.findIndex(p => p > dice);
     }
 
-    else if (name == 'geometric') {
-      // cdf 
+    else if (name == 'geometric') { // geometric(p = 1/2)
+      numChildren = Math.floor(Math.log(Math.random()) / Math.log(.5));
     }
+    
     else if (name == 'poisson') {
 
     }
+    let children = new Array(numChildren).fill(0).map(_ => Tree.randomTree(name, params));
+    t = new Tree(...children);
+    children.forEach(c => c.parent = t);
     return t
   }
 
@@ -65,6 +67,11 @@ class Tree {
       this.height = 1 + Math.max(...this.children.map(p => p == null ? 0 : p.height));
       this.size = 1 + this.children.map(p => p.size).reduce((a, b) => a + b);
     }
+  }
+
+  recomputeAllProperties() { // resets height, sizes and depths
+    this.recomputeProperties();
+    this.getDepth(0);
   }
 
   LCA(a, b) {
@@ -194,6 +201,11 @@ class Tree {
 
   getNeighbours(u) {
     return u.children.concat([u.parent]);
+  }
+
+  setMultiplicitiesDistances() {
+    this.setMultiplicities(); 
+    this.getNodeDistances();
   }
 
   static serialize(dumbTree) {
