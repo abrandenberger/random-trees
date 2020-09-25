@@ -19,6 +19,7 @@ let canvas;
 let isFullScreen = false;
 let resizeButton;
 let treeButton;
+let radio;
 let mode = 'physics'; // type Mode = physics | drawing :( 
 let drawModeStartNode = null; // type DrawMode = Maybe Node :)
 
@@ -137,7 +138,7 @@ function drawTreeFromMap(root, positions, scalings) {
     }
 }
 
-function newWorkerTree(type) {
+function newWorkerTree(type, distribution) {
     /* Create a new web worker that uses 'worker.js' and have it call  */
     spinner.style.visibility = 'visible';
     noLoop();
@@ -155,7 +156,7 @@ function newWorkerTree(type) {
         // redraw();
         loop();
     }, false);
-    worker.postMessage({ type });
+    worker.postMessage({ type, distribution });
 }
 
 function setup() {
@@ -174,7 +175,7 @@ function setup() {
 
     treeButton = createButton('New Tree');
     treeButton.mouseClicked(() => {
-        newWorkerTree('regular')
+        newWorkerTree('regular', radio.selected());
         mode = 'physics';
     });
     treeButton.addClass('topleft');
@@ -182,7 +183,7 @@ function setup() {
 
     bigButton = createButton('Big Tree');
     bigButton.mouseClicked(() => {
-        newWorkerTree('bigtree')
+        newWorkerTree('bigtree', radio.selected());
         mode = 'physics';
     });
     bigButton.addClass('topright');
@@ -213,6 +214,16 @@ function setup() {
     });
     customButton.addClass('bottomleft');
     customButton.parent('canvas');
+
+    radio = createRadio(); 
+    radio.option('\\(\\mathrm{Bin}(2, 1/2)\\)', 'man2');
+    radio.option('\\(\\mathrm{Bin}(3, 1/3) \\)', 'man3'); 
+    radio.option('\\(\\mathrm{Bin}(4, 1/4) \\)', 'man4'); 
+    radio.option('\\(\\mathrm{Geom}(1/2)\\)', 'geometric'); //made 
+    radio.option('\\(\\mathrm{Poisson}(1)\\)', 'poisson');
+    radio.selected('geometric');
+    radio.addClass('radio');
+    radio.parent('radiodiv');
 }
 
 
@@ -276,6 +287,10 @@ function draw() {
             noCursor();
             fill('black');
             circle(mouseX, mouseY, 2 * radius);
+            let pos = positions.get(drawModeStartNode);
+            let startX = pos.x;
+            let startY = pos.y;
+            line(startX, startY, mouseX, mouseY);
         } else {
             if (mousedOver(scalings, positions, mouseX, mouseY) != null) {
                 cursor(CROSS);
