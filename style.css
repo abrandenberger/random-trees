@@ -139,7 +139,7 @@ canvas {
 }
 
 #description {
-    padding-top: 1em;
+    padding-top: .5em;
     text-align: justify;
 }
 
@@ -171,6 +171,25 @@ button {
     position: absolute;
     left: 0;
     bottom: 0;
+}
+
+#radiodiv {
+    padding-top: 5px;
+}
+
+#radiodiv input[type="radio"] {
+    display: none;
+}
+
+#radiodiv label {
+    display: inline-block;
+    background-color: #f0f0f0;
+    padding: 4px 11px;
+    cursor: pointer;
+}
+
+#radiodiv input[type="radio"]:checked+label {
+    background-color: #cecece;
 }
 
 #footer {
