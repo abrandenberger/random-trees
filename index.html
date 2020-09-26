@@ -46,22 +46,48 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
     <script src="tree.js"></script>
     <script src="script.js"></script>
+    <script src="stylingscript.js"></script>
 
     <!-- python -m http.server 8080 -->
 
     <h1 class='content'>Random Trees</h1>
     <p class='content' style='margin-top: 0;'>
-        <span>&#8669;</span> <a href='https://github.com/abrandenberger/random-trees'><i class='fa fa-github' style='font-size:smaller'></i></a> 
-            made by a <a href='https://abrandenberger.github.io'>food forager</a> and a <a
-            href='https://diegolopez.me/'>code cop</a> 
-            <span>&#8668;</span>
+        <span>&#8669;</span> <a href='https://github.com/abrandenberger/random-trees'><i class='fa fa-github'
+                style='font-size:smaller'></i></a>
+        made by a <a href='https://abrandenberger.github.io'>food forager</a> and a <a
+            href='https://diegolopez.me/'>code cop</a>
+        <span>&#8668;</span>
     </p>
 
     <div id='wrapper'>
         <div id='canvas'></div>
         <div id='spinnericon'><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i></div>
     </div>
-    <div id='radiodiv' class='content'></div>
+
+    <div id='undercanvas' class='sized content'>
+        <!-- invisible entry to make things nice and balanced -->
+        <button class='infobutton' style='visibility: hidden;'></button>
+        <div id='radiodiv'></div>
+        <button class='infobutton' onclick="toggle()"><i class='fa fa-info'></i></button>
+    </div>
+    <div class='sized content'>
+        <div id='helptext' class='closedheight mainbar content'>
+            <ul>
+                <li>Click on <code>New Tree</code> to generate a random Galton-Watson tree with offspring
+                    distribution selected in the radio buttons. To avoid too large trees, we condition on size greater
+                    than 200.</li>
+                <li><code>Big Tree</code> also generates a tree from this distribution, but conditioned to have over 67
+                    notes.</li>
+                <li>Nodes are coloured and numbered according to their <i>multiplicity</i>, which is defined later in
+                    the main text.</li>
+                <li> To draw your own tree, use <code>Draw Tree</code>. In draw mode, click on an existing node in the
+                    tree (when your cursor is a cross) to begin a new edge, and click again somewhere else in the canvas
+                    (when your cursor is a black circle) to draw the second node and complete the edge.
+                </li>
+            </ul>
+            <!-- check margin size: either add to margin or add to sized + remove nodisp -->
+        </div>
+    </div>
 
     <div id='description' class='sized content'></div>
 
