@@ -1,21 +1,19 @@
-let root = document.documentElement;
+function timedvisibility(thing) {
+    setTimeout(function() {
+        thing.classList.toggle('notvisible');
+    }, 500);
+}
 
 function toggle() {
     let help = document.getElementById("helptext");
-    var height = help.scrollHeight;
-    let maxH = height + 20;
-    if (!help.classList.contains('openheight')) {
-        // console.log(maxH.toString() + "px");
-        root.style.setProperty('--maxHelpHeight', maxH.toString() + "px");
-    }
-    help.classList.toggle('closedheight');
     help.classList.toggle('openheight');
+    let helpbutton = document.getElementById("helpbutton");
+    helpbutton.classList.toggle('buttonon');
+    let helptext = document.getElementById("helptextcontent");
+    if (helptext.classList.contains('notvisible')) {
+        timedvisibility(helptext);
+    }
+    else {
+        helptext.classList.toggle('notvisible');
+    }
 }
-
-// window.onload = () => {
-//     var l = help.offsetLeft;
-//     var t = help.offsetTop;
-//     print(l, t);
-//     root.style.setProperty('--helpOffSetLeft', l.toString() + "px");
-//     root.style.setProperty('--helpOffSetRight', t.toString() + 'px');
-// }

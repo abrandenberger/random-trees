@@ -60,7 +60,30 @@
     </p>
 
     <div id='wrapper'>
-        <div id='canvas'></div>
+        <div id='canvas'>
+            <div id='helptext' class='mainbar bottomright'>
+                <div id='helptextcontent' class='notvisible'>
+                    <ul>
+                        <li>Click on <code>New Tree</code> to generate a random Galton-Watson tree with offspring
+                            distribution selected in the radio buttons. To avoid too large trees, we condition on size
+                            less
+                            than 200.</li>
+                        <li><code>Big Tree</code> also generates a tree from this distribution, but conditioned to have
+                            over 67
+                            nodes.</li>
+                        <li>Nodes are coloured and numbered according to their <i>multiplicity</i>, which is defined
+                            later in
+                            the main text.</li>
+                        <li> To draw your own tree, use <code>Draw Tree</code>. In draw mode, click on an existing node
+                            in the
+                            tree (when your cursor is a cross) to begin a new edge, and click again somewhere else in
+                            the canvas
+                            (when your cursor is a black circle) to draw the second node and complete the edge.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div id='spinnericon'><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i></div>
     </div>
 
@@ -68,25 +91,7 @@
         <!-- invisible entry to make things nice and balanced -->
         <button class='infobutton' style='visibility: hidden;'></button>
         <div id='radiodiv'></div>
-        <button class='infobutton' onclick="toggle()"><i class='fa fa-info'></i></button>
-    </div>
-    <div class='sized content'>
-        <div id='helptext' class='closedheight mainbar content'>
-            <ul>
-                <li>Click on <code>New Tree</code> to generate a random Galton-Watson tree with offspring
-                    distribution selected in the radio buttons. To avoid too large trees, we condition on size less
-                    than 200.</li>
-                <li><code>Big Tree</code> also generates a tree from this distribution, but conditioned to have over 67
-                    nodes.</li>
-                <li>Nodes are coloured and numbered according to their <i>multiplicity</i>, which is defined later in
-                    the main text.</li>
-                <li> To draw your own tree, use <code>Draw Tree</code>. In draw mode, click on an existing node in the
-                    tree (when your cursor is a cross) to begin a new edge, and click again somewhere else in the canvas
-                    (when your cursor is a black circle) to draw the second node and complete the edge.
-                </li>
-            </ul>
-            <!-- check margin size: either add to margin or add to sized + remove nodisp -->
-        </div>
+        <button id='helpbutton' class='infobutton' onclick="toggle()"><i class='fa fa-info'></i></button>
     </div>
 
     <div id='description' class='sized content'></div>

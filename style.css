@@ -214,20 +214,16 @@ button {
     font-size: smaller;
     transition: all 0.5s ease;
     will-change: transform;
+    z-index: 2;
 }
 
-.closedheight {
-    overflow: hidden;
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+#helptextcontent {
+    opacity: 1;
+    transition: all .4s ease;
 }
 
-.openheight {
-    max-height: var(--maxHelpHeight);
-    overflow: hidden;
+.notvisible {
+    opacity: 0 !important;
 }
 
 .mainbar {
@@ -235,16 +231,63 @@ button {
     border-radius: 5px;
     width: 650px;
     max-width: 100%;
-    float: right;
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0);
+    animation: scale-up .5s linear both;
 }
 
+.openheight {
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+    -webkit-transform-origin: 0% 100%;
+    transform-origin: 0% 100%;
+    visibility: visible !important;
+}
+
+
+/* @-webkit-keyframes scale-up {
+    0% {
+        -webkit-transform: scaleY(0);
+        transform: scaleY(0);
+        -webkit-transform-origin: 0% 100%;
+        transform-origin: 0% 100%;
+    }
+    100% {
+        -webkit-transform: scaleY(1);
+        transform: scaleY(1);
+        -webkit-transform-origin: 0% 100%;
+        transform-origin: 0% 100%;
+    }
+}
+
+@keyframes scale-up {
+    0% {
+        -webkit-transform: scaleY(0);
+        transform: scaleY(0);
+        -webkit-transform-origin: 0% 100%;
+        transform-origin: 0% 100%;
+    }
+    100% {
+        -webkit-transform: scaleY(1);
+        transform: scaleY(1);
+        -webkit-transform-origin: 0% 100%;
+        transform-origin: 0% 100%;
+    }
+} */
+
+
+/* 
 .sidebar {
     /* make sure min width is 200px */
-    position: absolute; 
+
+
+/* position: absolute; 
     top: var(--helpOffsetTop); 
     left: var(--helpOffsetLeft);
-    width: 200px;
-}
+    width: 200px; */
+
+
+/* } */
 
 .infobutton {
     display: block;
@@ -271,13 +314,13 @@ button {
     color: #ffffff;
 }
 
-.infobutton.buttonon {
+.buttonon {
     background-color: var(--backgcolor);
     border: 1px solid var(--midcolor);
     color: #fff;
 }
 
-.infobutton.buttonon:hover {
+.buttonon:hover {
     background-color: rgb(239, 239, 239);
     border: 1px solid lightgray;
     color: rgb(85, 85, 85);
