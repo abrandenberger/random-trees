@@ -221,7 +221,7 @@ function setup() {
     radio.option('\\(\\mathrm{Bin}(4, 1/4) \\)', 'man4'); 
     radio.option('\\(\\mathrm{Geom}(1/2)\\)', 'geometric'); //made 
     radio.option('\\(\\mathrm{Poisson}(1)\\)', 'poisson');
-    radio.selected('geometric');
+    radio.selected('man3');
     radio.addClass('radio');
     radio.parent('radiodiv');
 }
@@ -344,18 +344,22 @@ function update() {
                 let sx = (q.x - p.x) / d; // unit vector
                 let sy = (q.y - p.y) / d;
                 // if (t.areNeighbours(nodep, nodeq)) {
-                if (graphdist <= 2) {
+                if (graphdist <= 3) {
                     // attractive force 
                     // p.ax += g * sx / (d + 1) ** 2;
                     // p.ay += g * sy / (d + 1) ** 2;
                     // spring force 
-                    p.ax += k * sx * (d - 100 * graphdist);
-                    p.ay += k * sy * (d - 100 * graphdist);
+                    // p.ax += k * sx * (d - 100 * graphdist) / (graphdist);
+                    // p.ay += k * sy * (d - 100 * graphdist) / (graphdist);
+                    p.ax += (2/graphdist) * sx * log(d/(100*graphdist));
+                    p.ay += (2/graphdist)* sy * log(d/(100*graphdist));
+                    // q.ax -= .5* sx;
+                    // q.ay -= .5* sy;
                 }
                 if (!t.areNeighbours(nodep, nodeq)) {
-                    // repelling force between all nodes 
-                    p.ax += -g * (sqrt(graphdist)) * sx / (d + 1) ** 2;
-                    p.ay += -g * (sqrt(graphdist)) * sy / (d + 1) ** 2;
+                    // repelling force between all non-adjacent nodes 
+                    p.ax += -g * (sqrt(graphdist)) * sx / (d + 2) ** 2;
+                    p.ay += -g * (sqrt(graphdist)) * sy / (d + 2) ** 2;
                 }
             }
         })
@@ -376,6 +380,8 @@ function update() {
 
     if (clickedNode != null) {
         let [x, y] = canvasToPhys(scalings, mouseX, mouseY);
+        [x,y] = [min(x, scalings.maxX), min(y, scalings.maxY)];
+        [x,y] = [max(x, scalings.minX), max(y, scalings.minY)];
         positions.set(clickedNode, { x, y, vx: 0, vy: 0, ax: 0, ay: 0 });
     }
 
