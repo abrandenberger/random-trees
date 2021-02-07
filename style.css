@@ -51,6 +51,17 @@ a {
 a:hover {
     text-decoration: underline;
     text-decoration-thickness: thin;
+} 
+
+a i {
+    -webkit-transition-duration: 200ms;
+    -o-transition-duration: 200ms;
+    -moz-transition-duration: 200ms;
+    transition-duration: 200ms;
+}
+
+a i:hover {
+    color: var(--midcolor);
 }
 
 .references {
@@ -156,6 +167,23 @@ button {
     font-family: 'Computer Modern Serif', serif;
 }
 
+#canvas button {
+    border: 1px solid lightgray;
+    outline: none;
+    border-radius: 4px;
+    color: rgb(85, 85, 85);
+    -webkit-transition-duration: 200ms;
+    -o-transition-duration: 200ms;
+    -moz-transition-duration: 200ms;
+    transition-duration: 200ms;
+    cursor: pointer;
+}
+
+#canvas button:hover {
+    background-color: #dddddd;
+}
+
+
 .topleft {
     position: absolute;
     left: 0;
@@ -206,6 +234,10 @@ button {
     cursor: pointer;
 }
 
+#radiodiv label:hover {
+    background-color: #e8e8e8;
+}
+
 #radiodiv input[type="radio"]:checked+label {
     background-color: #d8d8d8;
 }
@@ -254,10 +286,10 @@ button {
     border: 1px solid lightgray;
     outline: none;
     color: rgb(85, 85, 85);
-    -webkit-transition-duration: 500ms;
-    -o-transition-duration: 500ms;
-    -moz-transition-duration: 500ms;
-    transition-duration: 500ms;
+    -webkit-transition-duration: 300ms;
+    -o-transition-duration: 300ms;
+    -moz-transition-duration: 300ms;
+    transition-duration: 300ms;
 }
 
 .infobutton i {
