@@ -284,6 +284,7 @@ button {
     width: 22px;
     padding: 0;
     border-radius: 50%;
+    background-color: #f0f0f0;
     border: 1px solid lightgray;
     outline: none;
     color: rgb(85, 85, 85);
