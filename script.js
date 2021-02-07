@@ -386,28 +386,3 @@ function update() {
     }
 
 }
-
-function resizeUnderCanvas() {
-    let innerHeight = document.getElementById('radiodiv').clientHeight;
-    document.getElementById('undercanvas').setAttribute("style","min-height:"+innerHeight.toString()+'px');
-}
-
-// window stuff
-window.onload = () => {
-    fetch('description.md')
-        .then(res => res.text())
-        .then(s => {
-            document.getElementById('description').innerHTML = marked(s);
-            renderMathInElement(document.body, options = {
-                delimeters: [
-                    { left: "$$", right: "$$", display: true },
-                    { left: "$", right: "$", display: false },
-                    { left: "\\(", right: "\\)", display: false },
-                    { left: "\\[", right: "\\]", display: true }
-                ]
-            });
-            resizeUnderCanvas();
-        });
-    spinner = document.getElementById('spinnericon');
-}
-window.addEventListener('resize', resizeUnderCanvas, true);
