@@ -171,6 +171,7 @@ button {
     border: 1px solid lightgray;
     outline: none;
     border-radius: 4px;
+    background-color: #f0f0f0;
     color: rgb(85, 85, 85);
     -webkit-transition-duration: 200ms;
     -o-transition-duration: 200ms;

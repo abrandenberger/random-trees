@@ -407,8 +407,8 @@ window.onload = () => {
                     { left: "\\[", right: "\\]", display: true }
                 ]
             });
+            resizeUnderCanvas();
         });
     spinner = document.getElementById('spinnericon');
 }
-
 window.addEventListener('resize', resizeUnderCanvas, true);
