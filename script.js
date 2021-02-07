@@ -387,6 +387,12 @@ function update() {
 
 }
 
+function resizeUnderCanvas() {
+    let innerHeight = document.getElementById('radiodiv').clientHeight;
+    console.log(innerHeight); 
+    document.getElementById('undercanvas').setAttribute("style","min-height:"+innerHeight.toString()+'px');
+}
+
 // window stuff
 window.onload = () => {
     fetch('description.md')
@@ -404,3 +410,5 @@ window.onload = () => {
         });
     spinner = document.getElementById('spinnericon');
 }
+
+window.addEventListener('resize', resizeUnderCanvas, true);

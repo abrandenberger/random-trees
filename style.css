@@ -187,6 +187,7 @@ button {
     justify-content: space-between;
     align-items: center;
     padding-top: 5px;
+    min-height: 30px;
 }
 
 #radiodiv {
@@ -284,7 +285,7 @@ button {
 #footer {
     text-align: center;
     margin-top: 4em;
-    margin-bottom: 5em;
+    padding-bottom: 5em;
     font-size: small;
     color: rgb(160, 160, 160);
     display: grid;

@@ -1,3 +1,13 @@
+let treeSize = 0;
+let maxNodeCount = 200; 
+
+class TreeError extends Error {
+  constructor() {
+    super("Tree Too Big");
+    this.name = "TreeError";
+  }
+}
+
 class Tree {
   constructor(...children) {
     this.children = children;
@@ -12,6 +22,10 @@ class Tree {
 
   static randomTree(name, params) {
     // implement check if mean is <= 1
+    treeSize += 1; 
+    if (treeSize > maxNodeCount) {
+      throw new TreeError ();
+    }
     let t;
     let numChildren; 
     if (name == 'manual') {
