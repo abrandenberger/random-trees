@@ -1,5 +1,5 @@
 let treeSize = 0;
-let maxNodeCount = 200; 
+let maxNodeCount = 250; 
 
 class TreeError extends Error {
   constructor() {

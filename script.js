@@ -389,7 +389,6 @@ function update() {
 
 function resizeUnderCanvas() {
     let innerHeight = document.getElementById('radiodiv').clientHeight;
-    console.log(innerHeight); 
     document.getElementById('undercanvas').setAttribute("style","min-height:"+innerHeight.toString()+'px');
 }
 
