@@ -76,12 +76,10 @@ function initializeMap(root, x, y, w) {
 }
 
 // testing depth, LCA, and nodeDistances 
-console.log('tester tree height', testert.height, 'size', testert.size, 'left subtree height', testert.children[0].height, 'size', testert.children[0].size)
-console.log('tester tree depth', testert.depth, 'child depth', testert.children[1].depth, 'grandchild', testert.children[1].children[0].depth);
-console.log('LCA root', testert.LCA(testert.children[0], testert.children[1]) == testert, 'LCA right child',
-    testert.LCA(testert.children[1].children[0], testert.children[1].children[1]) == testert.children[1]);
-// console.log('Distance root - child', testert.nodeDistances.get(testert).get(testert.children[0]));
-// console.log('Distance child - grandchild', testert.nodeDistances.get(testert.children[0]).get(testert.children[1].children[0]));
+// console.log('tester tree height', testert.height, 'size', testert.size, 'left subtree height', testert.children[0].height, 'size', testert.children[0].size)
+// console.log('tester tree depth', testert.depth, 'child depth', testert.children[1].depth, 'grandchild', testert.children[1].children[0].depth);
+// console.log('LCA root', testert.LCA(testert.children[0], testert.children[1]) == testert, 'LCA right child',
+    // testert.LCA(testert.children[1].children[0], testert.children[1].children[1]) == testert.children[1]);
 
 function windowSize() {
     /* Get the default non-full-screen canvas size. */
@@ -386,3 +384,10 @@ function update() {
     }
 
 }
+
+// window.addEventListener('load', () => {
+//     setTimeout(() => {
+//         but = document.getElementsByClassName('topright')[0];
+//         but.click();            
+//     }, 100);
+// }, true);
