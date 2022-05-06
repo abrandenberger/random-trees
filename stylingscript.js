@@ -28,7 +28,7 @@ window.onload = () => {
     fetch('description.md')
         .then(res => res.text())
         .then(s => {
-            document.getElementById('description').innerHTML = marked(s);
+            document.getElementById('description').innerHTML = marked.parse(s);
             renderMathInElement(document.body, options = {
                 delimeters: [
                     { left: "$$", right: "$$", display: true },
