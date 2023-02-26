@@ -1,114 +1,145 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <title>Random Trees</title>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <link rel='shortcut icon' href='tree-icon.png' />
+    <link rel="shortcut icon" href="tree-icon.png" />
 
     <!-- KaTex -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-        integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+      integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X"
+      crossorigin="anonymous"
+    />
     <!-- The loading of KaTeX is deferred to speed up page rendering -->
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
-        integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4"
-        crossorigin="anonymous"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
+      integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4"
+      crossorigin="anonymous"
+    ></script>
     <!-- To automatically render math in text elements, include the auto-render extension: -->
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-        integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
-        onload='renderMathInElement(document.body, options={
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+      integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"
+      crossorigin="anonymous"
+      onload='renderMathInElement(document.body, options={
             delimeters: [
                 {left: "$$", right: "$$" , display: true}, 
                 {left: "$" , right: "$" , display: false}, 
                 {left: "\\(" , right: "\\)" , display: false}, 
                 {left: "\\[" , right: "\\]" , display: true} 
             ]
-        })'>
-        </script>
-
-    <!-- Markdown -->
-    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.15/lib/marked.umd.min.js"></script>
+        })'
+    ></script>
 
     <!-- LaTex Font -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css"
+    />
     <!-- available fonts: 'Computer Modern Bright', 'Computer Modern Concrete', 'Computer Modern Sans', 
         'Computer Modern Serif', 'Computer Modern Typewriter' -->
 
     <!-- font awesome icons -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
 
-<body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
-    <script src="tree.js"></script>
-    <script src="script.js"></script>
-    <script src="stylingscript.js"></script>
-
+  <body>
     <!-- python -m http.server 8080 -->
 
-    <h1 class='content'>Random Trees</h1>
-    <p class='content' style='margin-top: 0;'>
-        <span>&#8669;</span> <a href='https://github.com/abrandenberger/random-trees'><i class='fa fa-github'
-                style='font-size:smaller'></i></a>
-        made by a <a href='https://abrandenberger.github.io'>food forager</a> and a <a
-            href='https://diegolopez.me/'>code cop</a>
-        <span>&#8668;</span>
+    <h1 class="content">Random Trees</h1>
+    <p class="content" style="margin-top: 0">
+      <span>&#8669;</span>
+      <a href="https://github.com/abrandenberger/random-trees"
+        ><i class="fa fa-github" style="font-size: smaller"></i
+      ></a>
+      made by a <a href="https://abrandenberger.github.io">food forager</a> and
+      a <a href="https://diegolopez.me/">code cop</a>
+      <span>&#8668;</span>
     </p>
 
-    <div id='wrapper'>
-        <div id='canvas'>
-            <div id='helptext' class='mainbar bottomright'>
-                <div id='helptextcontent' class='notvisible'>
-                    <ul>
-                        <li>Click on <code>New Tree</code> to generate a random Bienaymé tree with offspring
-                            distribution selected in the radio buttons. To avoid too large trees, we condition on size
-                            less
-                            than 250.</li>
-                        <li><code>Big Tree</code> also generates a tree from this distribution, but conditioned to have
-                            over 67
-                            nodes.</li>
-                        <li>Nodes are coloured and numbered according to their <i>multiplicity</i>, which is defined
-                            later in
-                            the main text.</li>
-                        <li> To draw your own tree, use <code>Draw Tree</code>. In draw mode, click on an existing node
-                            in the
-                            tree (when your cursor is a cross) to begin a new edge, and click again somewhere else in
-                            the canvas
-                            (when your cursor is a black circle) to draw the second node and complete the edge.
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <div id="wrapper">
+      <div id="canvas">
+        <div id="helptext" class="mainbar bottomright">
+          <div id="helptextcontent" class="notvisible">
+            <ul>
+              <li>
+                Click on <code>New Tree</code> to generate a random Bienaymé
+                tree with offspring distribution selected in the radio buttons.
+                To avoid too large trees, we condition on size less than 250.
+              </li>
+              <li>
+                <code>Big Tree</code> also generates a tree from this
+                distribution, but conditioned to have over 67 nodes.
+              </li>
+              <li>
+                Nodes are coloured and numbered according to their
+                <i>multiplicity</i>, which is defined later in the main text.
+              </li>
+              <li>
+                To draw your own tree, use <code>Draw Tree</code>. In draw mode,
+                click on an existing node in the tree (when your cursor is a
+                cross) to begin a new edge, and click again somewhere else in
+                the canvas (when your cursor is a black circle) to draw the
+                second node and complete the edge.
+              </li>
+            </ul>
+          </div>
         </div>
-        <div id='spinnericon'><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i></div>
+      </div>
+      <div id="spinnericon">
+        <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+      </div>
     </div>
 
-    <div id='undercanvas' class='sized content'>
-        <!-- invisible entry to make things nice and balanced -->
-        <button class='infobutton' style='visibility: hidden;'></button>
-        <div id='radiodiv'></div>
-        <button id='helpbutton' class='infobutton' onclick="toggle()"><i class='fa fa-info'></i></button>
+    <div id="undercanvas" class="sized content">
+      <!-- invisible entry to make things nice and balanced -->
+      <button class="infobutton" style="visibility: hidden"></button>
+      <div id="radiodiv"></div>
+      <button id="helpbutton" class="infobutton" onclick="toggle()">
+        <i class="fa fa-info"></i>
+      </button>
     </div>
 
-    <div id='description' class='sized content'></div>
+    <div id="description" class="sized content"></div>
 
-    <div id='footer' class='sized content'>
-        <div class='footerleft'>
-            <a href='https://abrandenberger.github.io'><i class="fa fa-arrow-left"></i></a>
-            <a href='https://abrandenberger.github.io'>Back to website</a>
-        </div>
-        <div class='footercenter'>
-            &copy; August 2020
-        </div>
-        <div class='footerright'>
-            <a href='https://github.com/abrandenberger/random-trees'>Github</a>
-            <a href='https://github.com/abrandenberger/random-trees'><i class='fa fa-github'></i></a>
-        </div>
+    <div id="footer" class="sized content">
+      <div class="footerleft">
+        <a href="https://abrandenberger.github.io"
+          ><i class="fa fa-arrow-left"></i
+        ></a>
+        <a href="https://abrandenberger.github.io">Back to website</a>
+      </div>
+      <div class="footercenter">&copy; August 2020</div>
+      <div class="footerright">
+        <a href="https://github.com/abrandenberger/random-trees">Github</a>
+        <a href="https://github.com/abrandenberger/random-trees"
+          ><i class="fa fa-github"></i
+        ></a>
+      </div>
     </div>
-</body>
 
+    <<<<<<< HEAD =======
+    <!-- Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.2.12/marked.min.js"></script>
+
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"
+    ></script>
+    <script type="text/javascript" src="tree.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="stylingscript.js"></script>
+  </body>
+  >>>>>>> b492244 (fix marked bug)
 </html>
