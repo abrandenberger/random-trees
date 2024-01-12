@@ -27,23 +27,23 @@ function resizeUnderCanvas() {
 // window stuff
 document.addEventListener("DOMContentLoaded", () => {
   console.log("website loaded");
-  fetch("description.md");
-  //   .then((res) => res.text())
-  //   .then((s) => {
-  //     document.getElementById("description").innerHTML = marked.parse(s);
-  //     renderMathInElement(
-  //       document.body,
-  //       (options = {
-  //         delimeters: [
-  //           { left: "$$", right: "$$", display: true },
-  //           { left: "$", right: "$", display: false },
-  //           { left: "\\(", right: "\\)", display: false },
-  //           { left: "\\[", right: "\\]", display: true },
-  //         ],
-  //       })
-  //     );
-  //     resizeUnderCanvas();
-  //   });
-  // spinner = document.getElementById("spinnericon");
+  fetch("description.md")
+    .then((res) => res.text())
+    .then((s) => {
+      document.getElementById("description").innerHTML = marked.parse(s);
+      renderMathInElement(
+        document.body,
+        (options = {
+          delimeters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true },
+          ],
+        })
+      );
+      resizeUnderCanvas();
+    });
+  spinner = document.getElementById("spinnericon");
 });
 window.addEventListener("resize", resizeUnderCanvas, true);
