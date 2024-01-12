@@ -46,7 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("resize", resizeUnderCanvas, true);
 
 window.addEventListener("p5SetupComplete", () => {
-  radioDiv = document.getElementById("radiodiv");
-  renderMathInElement(radioDiv, (options = katexOptions));
-  resizeUnderCanvas();
+  console.log("p5 setup complete");
+  // radioDiv = document.getElementById("radiodiv");
+  // renderMathInElement(radioDiv, (options = katexOptions));
+  // resizeUnderCanvas();
 });
