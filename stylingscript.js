@@ -24,26 +24,29 @@ function resizeUnderCanvas() {
     .setAttribute("style", "min-height:" + innerHeight.toString() + "px");
 }
 
+const katexOptions = {
+  delimeters: [
+    { left: "$$", right: "$$", display: true },
+    { left: "$", right: "$", display: false },
+    { left: "\\(", right: "\\)", display: false },
+    { left: "\\[", right: "\\]", display: true },
+  ],
+};
 // window stuff
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("website loaded");
   fetch("description.md")
     .then((res) => res.text())
     .then((s) => {
       document.getElementById("description").innerHTML = marked.parse(s);
-      renderMathInElement(
-        document.body,
-        (options = {
-          delimeters: [
-            { left: "$$", right: "$$", display: true },
-            { left: "$", right: "$", display: false },
-            { left: "\\(", right: "\\)", display: false },
-            { left: "\\[", right: "\\]", display: true },
-          ],
-        })
-      );
+      renderMathInElement(document.body, (options = katexOptions));
       resizeUnderCanvas();
     });
   spinner = document.getElementById("spinnericon");
 });
 window.addEventListener("resize", resizeUnderCanvas, true);
+
+window.addEventListener("p5SetupComplete", () => {
+  radioDiv = document.getElementById("radiodiv");
+  renderMathInElement(radioDiv, (options = katexOptions));
+  resizeUnderCanvas();
+});
